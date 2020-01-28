@@ -1,0 +1,49 @@
+
+
+from matplotlib import pyplot as plt
+plt.style.use('ggplot')
+t = 0
+import math
+v = float(input('Begynnelsehastighet(m/s, neråt): '))
+αg = float(input('Vinkel (grader): '))
+αr = αg*math.pi/180
+vy = float(math.cos(αr))*v
+m = float(input('Massa(kg): '))
+steg = int(input('Antal steg: '))
+stegl = float(input('Steglängd: '))
+r = float(input('Radie(m): '))
+tid = []
+hast= []
+
+for i in range(0, steg):
+    nyvy1 = m * float(9.82)
+    nyvy2 = float(1.29)* math.pi * 0.5* 0.47 * r * r * vy * vy
+    Fres = nyvy1 - nyvy2
+    A = Fres / m
+    nyvy = vy + A * stegl
+    print(nyvy)
+    hastighet_y = [vy, nyvy]
+    vy = nyvy
+    tid_x = [t, i * stegl]
+
+
+    t = i * stegl
+    tid.append(t)
+    hast.append(nyvy)
+
+#plt.plot(tid_x, hastighet_y, linestyle='-', label='Hastighet över tid')
+plt.plot(tid, hast, linestyle='-', label='Hastighet över tid')
+
+plt.xlabel('Tid')
+plt.ylabel('Hastighet)')
+plt.title('Hastighet över tid')
+axes = plt.gca()
+axes.set_xlim([0, steg * stegl])
+axes.set_ylim([0, vy])
+plt.legend()
+
+plt.tight_layout()
+
+plt.savefig('plot.png')
+
+plt.show()
